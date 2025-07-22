@@ -1,0 +1,65 @@
+{
+    "tagGroupName": "wf10_inp_sub_information",
+    "description": "wf10_inp_sub_information",
+    "enableHyperTable": false,
+    "isView": false,
+    "sqlQueryScript": null,
+    "tagRelationFieldMappings": [
+        {
+            "fieldName": "plant_code",
+            "dataType": "text",
+            "isNotNull": false,
+            "isIdentity": true,
+            "position": 1
+        },
+        {
+            "fieldName": "doc_no",
+            "dataType": "text",
+            "isNotNull": false,
+            "isIdentity": true,
+            "position": 2
+        },
+        {
+            "fieldName": "check_date",
+            "dataType": "text",
+            "isNotNull": false,
+            "isIdentity": false,
+            "position": 3
+        },
+        {
+            "fieldName": "working_time",
+            "dataType": "text",
+            "isNotNull": false,
+            "isIdentity": false,
+            "position": 4
+        },
+        {
+            "fieldName": "working_start_time",
+            "dataType": "text",
+            "isNotNull": false,
+            "isIdentity": false,
+            "position": 5
+        },
+        {
+            "fieldName": "working_end_time",
+            "dataType": "text",
+            "isNotNull": false,
+            "isIdentity": false,
+            "position": 6
+        },
+        {
+            "fieldName": "break_start_time",
+            "dataType": "text",
+            "isNotNull": false,
+            "isIdentity": false,
+            "position": 7
+        },
+        {
+            "fieldName": "break_end_time",
+            "dataType": "text",
+            "isNotNull": false,
+            "isIdentity": false,
+            "position": 8
+        }
+    ]
+}
