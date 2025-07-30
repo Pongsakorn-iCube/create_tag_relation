@@ -1,5 +1,3 @@
-# .py/to_json.py
-
 import os
 import json
 from openpyxl import load_workbook
@@ -50,8 +48,52 @@ def run_to_json():
     try:
         wb = load_workbook(filename=file_path, data_only=True)
 
-        for sheet_name in wb.sheetnames:
+        # กรอง sheet และแสดงให้เลือก
+        valid_sheets = []
+        print("\n📝 รายชื่อ Sheet ที่พบ:")
+        for idx, sheet_name in enumerate(wb.sheetnames, 1):
+            if sheet_name.strip().lower() == "detail":
+                continue
+            print(f"{idx}. {sheet_name}")
+            valid_sheets.append((idx, sheet_name))
+
+        if not valid_sheets:
+            print("❌ ไม่พบ Sheet(xlsx) ที่สามารถประมวลผลได้")
+            return
+
+        print("\nเลือก Sheet ที่ต้องการสร้าง JSON:")
+        sheet_selection = input("พิมพ์หมายเลขหรือ 'all': ").strip().lower()
+
+        if sheet_selection == 'all':
+            selected_sheets = [name for _, name in valid_sheets]
+        else:
+            selected_indices = set(sheet_selection.split(','))
+            selected_sheets = []
+            for idx_str in selected_indices:
+                if idx_str.strip().isdigit():
+                    idx = int(idx_str.strip())
+                    sheet_tuple = next((s for s in valid_sheets if s[0] == idx), None)
+                    if sheet_tuple:
+                        selected_sheets.append(sheet_tuple[1])
+            if not selected_sheets:
+                print("❌ ไม่พบหมายเลขที่ถูกต้อง")
+                return
+
+        # ยืนยันข้อมูลก่อนสร้าง
+        print("\n📌 คุณเลือกสร้าง JSON จาก Sheet ต่อไปนี้:")
+        for name in selected_sheets:
+            print(f" - {name}")
+        confirm = input("พิมพ์ 'Y' เพื่อยืนยันการสร้างไฟล์: ").strip().lower()
+        if confirm != 'y':
+            print("❎ ยกเลิกการสร้างไฟล์")
+            return
+
+        # เริ่มสร้าง JSON
+        for sheet_name in selected_sheets:
             sheet = wb[sheet_name]
+
+            tag_group_name = sheet["D3"].value or sheet_name
+            description = sheet["D5"].value or ""
 
             mappings = []
             row = 12  # เริ่มจาก D12, E12, F12
@@ -81,8 +123,8 @@ def run_to_json():
                 position += 1
 
             result = {
-                "tagGroupName": sheet_name,
-                "description": sheet_name,
+                "tagGroupName": tag_group_name,
+                "description": description,
                 "enableHyperTable": False,
                 "isView": False,
                 "sqlQueryScript": None,

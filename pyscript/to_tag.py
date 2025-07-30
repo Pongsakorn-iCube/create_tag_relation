@@ -6,7 +6,7 @@ import time
 def run_to_tag():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     base_dir = os.path.abspath(os.path.join(script_dir, ".."))
-    api_file_path = os.path.join(script_dir, "API.txt")
+    api_file_path = os.path.join(script_dir, "api_write.txt")
 
     def load_api_list(path):
         with open(path, "r", encoding="utf-8") as f:
