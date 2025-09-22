@@ -22,9 +22,15 @@ def select_api(api_list):
         print("❌ เลือกไม่ถูกต้อง")
 
 def list_subfolders(directory):
-    return [f for f in os.listdir(directory)
-            if os.path.isdir(os.path.join(directory, f)) and not f.startswith("__")]
-
+    exclude = {".git", "pyscript"}
+    return [
+        f for f in os.listdir(directory)
+        if (
+            os.path.isdir(os.path.join(directory, f))
+            and not f.startswith("__")
+            and f not in exclude
+        )
+    ]
 
 def list_json_files(directory):
     return [f for f in os.listdir(directory) if f.endswith(".json")]
